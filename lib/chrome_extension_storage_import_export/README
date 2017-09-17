@@ -1,0 +1,5 @@
+# Chrome Extension Storage Import Export (temp name?)
+
+A simple library that contain an import and export function
+
+It export the whole storage as is, including any junk data that was stored.

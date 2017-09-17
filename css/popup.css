@@ -1,0 +1,151 @@
+body {
+    width: 350px;
+    margin: 0;
+}
+header {
+    display: flex;
+    justify-content:space-between;
+    align-items: center;
+    padding: 0 16px;
+    height: 60px;
+    background: #FFF;
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+header h1 {
+    margin: 0;
+    font-size: 32px;
+    letter-spacing: 1px;
+}
+header img {
+    cursor: pointer;
+    transition: 0.2s;
+    fill: black;
+}
+#error-message {
+    position: fixed;
+    top: 60px;
+    left: 0;
+    right: 0;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    padding: 16px;
+}
+#error-message p {
+    font-size: 16px;
+    text-align: center;
+    margin: 0 auto;
+    letter-spacing: 1px;
+}
+#group-list {
+    margin-top: 76px;
+    padding: 0 16px;
+}
+#group-list p {
+    text-align: center;
+    font-size: 20px;
+    margin: 80px auto;
+    width: 80%;
+    letter-spacing: 0.8px;
+}
+.group {
+    margin-bottom: 16px;
+}
+.group-info {
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding-bottom: 18px;
+}
+.group-info img {
+    width: 8px;
+    transition: 0.2s;
+}
+.group h1 {
+    letter-spacing: 1px;
+    font-size: 24px;
+    margin: 0;
+}
+.group h2 {
+    font-size: 18px;
+    margin: 0;
+    letter-spacing: 1px;
+}
+.group-editor-row {
+    display: flex;
+    justify-content: space-between;
+}
+.group-editor-button {
+    cursor: pointer;
+    width: 40%;
+    position: relative;
+    margin-bottom: 18px;
+    mix-blend-mode: difference;
+    border: 2px solid rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    transition: 0.15s;
+    padding: 10px;
+}
+.group-editor-button:hover {
+    background: rgba(255, 255, 255, 0.2);
+}
+.group-editor-button h1 {
+    font-size: 20px;
+}
+.group-editor-button h2 {
+    font-size: 16px;
+}
+#create-group-prompt {
+    padding: 0 16px;
+    border-bottom: none;
+    display: flex;
+    justify-content: space-between;
+}
+#create-group-prompt div {
+    flex: 1;
+    padding-right: 24px;
+}
+#create-group-prompt img {
+    width: 30px;
+    cursor: pointer;
+}
+#create-group-prompt input {
+    font-size: 24px;
+    outline: none;
+    letter-spacing: 1px;
+    border: none;
+    background: none;
+    width: 100%;
+}
+#create-group-prompt h2 {
+    width: 100%;
+}
+footer {
+    margin-top: 20px;
+    background: white;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+footer a {
+    text-decoration: none;
+    color: black;
+    font-family: 'Visby DemiBold';
+    font-size: 18px;
+    margin: 0 10px;
+    letter-spacing: 0.5px;
+    outline: none;
+}
+footer a:hover {
+    text-decoration: underline;
+}
+.rotate45 {
+    transform: rotate(45deg);
+}
+.rotate90 {
+    transform: rotate(90deg);
+}

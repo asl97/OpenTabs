@@ -1,0 +1,30 @@
+This is just a short summary of the changes, check the git log for the full logs.
+
+- updateGroupList and renderGroupList was both async, leading to possible race condition
+  renderGroupList is change to take an list of group instead of looking it up the group itself
+  since the group is usually available when calling renderGroupList
+
+- change storage of data into an object instead of an array
+  using an array lead to lots of complex hard to follow code, especially relating to group storage
+  changing it to an object simplify updating/removing/looking up by name
+  the code already forbid same name so it should be fine
+
+- allow theme to change font color when require
+  add two simple solid color theme
+
+- add a whole bunch of borders and background
+  for theme, buttons and stuff so it look better
+
+- rewrite a number of poorly implemented functions
+  like compressTabs and promptIsOpen to directly return the object instead of doing it in a round about way
+
+- reduce duplicate code
+  reindent and restyle code
+
+- rename option page to theme page
+  allow editing of theme without needing to open the extension page
+
+- new group ui in options
+  allow removing links
+
+- import and export function

@@ -1,128 +1,97 @@
-const themes = [
-  {
-    name: 'Pure',
-    color1: '#0000FF',
-    color2: '#000000'
-  },{
-    name: 'Depth',
-    color1: '#04E0E4',
-    color2: '#08093F'
-  },{
-    name: 'Popsicle',
-    color1: '#FE2851',
-    color2: '#29C5FF'
-  },{
-    name: 'Jazz',
-    color1: '#E10F5D',
-    color2: '#03043C'
-  },{
-    name: 'Sand',
-    color1: '#E26E43',
-    color2: '#ED2962'
-  },{
-    name: 'Night',
-    color1: '#1B0068',
-    color2: '#08000C'
-  }
-];
-const defaultTheme = 'Jazz';
+var query_string = {}
 
-$(document).ready(() => {
-  setUpThemes();
-  initDatabase();
-  setUpUIWithTheme();
-  $('.theme').on('click', function() { selectTheme($(this)); });
-});
-
-function setUpUIWithTheme() {
-  getTheme(themeInDB => {
-    themes.find(theme => {
-      if (theme.name == themeInDB) {
-        modifyUIWithTheme(theme);
-      }
-    });
-  });
-}
-
-function modifyUIWithTheme(theme) {
-  unselectAllThemes();
-  $('body').css('backgroundImage', `-webkit-linear-gradient(${theme.color1} 0%, ${theme.color2} 100%)`);
-  $('body').css('backgroundImage', `-o-linear-gradient(${theme.color1} 0%, ${theme.color2} 100%)`);
-  $('body').css('backgroundImage', `linear-gradient(${theme.color1} 0%, ${theme.color2} 100%)`);
-  const htmlThemes = $('.theme');
-  for (let i = 0; i < htmlThemes.length; i++) {
-    const htmlTheme = $(htmlThemes[i]);
-    const htmlText = htmlTheme.children('h2').html();
-    if (theme.name == htmlText) {
-      htmlTheme.children('h2').css('font-family', 'Visby DemiBold');
-      htmlTheme.children('h2').css('letter-spacing', '0.5px');
-      return
+location.search.substr(1).split("&").forEach(
+    function(item) {
+        var key = item.split("=")[0], value = decodeURIComponent(item.split("=")[1])
+        if (key in query_string){
+            query_string[key].push(value)
+        } else {
+            query_string[key] = [value]
+        }
     }
-  }
-}
+)
 
-function unselectAllThemes() {
-  const htmlThemes = $('.theme');
-  for (let i = 0; i < htmlThemes.length; i++) {
-    const htmlTheme = $(htmlThemes[i]);
-    htmlTheme.children('h2').css('font-family', 'Visby Light');
-    htmlTheme.children('h2').css('letter-spacing', '1px');
-  }
-}
-
-function setUpThemes() {
-  const themesMarkup = themes.map(theme => `
-    <div class="theme">
-      <div style='background-image: -webkit-linear-gradient(${theme.color1} 0%, ${theme.color2} 100%); background-image: -o-linear-gradient(${theme.color1} 0%, ${theme.color2} 100%); background-image: linear-gradient(${theme.color1} 0%, ${theme.color2} 100%);'></div>
-      <h2>${theme.name}</h2>
-    </div>
-  `).join('');
-  $('#theme-list').html(themesMarkup);
-}
-
-function initDatabase() {
-  getTheme(theme => {
-    if (!theme) {
-      chrome.storage.sync.set({
-        'options': {
-          'theme': defaultTheme
+window.addEventListener('load', function() {
+    $('#clear_storage').on('click', () => {
+        if (window.confirm("Do you really want to clear storage?")) { 
+            chrome.storage.sync.clear(
+                () => {
+                    if (chrome.runtime.lastError == undefined) {
+                        alert('storage cleared')
+                    } else {
+                        alert('Something happen, check console log for error')
+                        console.warn(chrome.runtime.lastError)
+                    }
+                }
+            )
         }
-      }, () => {
-        if (chrome.runtime.lastError) {
-          console.error('Save failed: ' + chrome.runtime.lastError.message);
-        }
-      });
-    }
-  });
-}
+    })
 
-function getOptionsObject(callback) {
-  chrome.storage.sync.get('options', options => {
-    callback(options);
-  });
-}
+    ceos.load('ceos_options', {}, {}, callback=(options) => {
+        $('.ceos_options').change(() => {
+            ceos.save('ceos_options')
+            snackbar = document.getElementById("snackbar")
+            snackbar.className = "show"
+            snackbar.onclick = ()=>{
+                window.location.reload()
+            }
+        })
 
-function getTheme(callback) {
-  getOptionsObject(options => {
-    callback(options.options.theme);
-  });
-}
+        chrome.storage.sync.get(null, (storage) => {
+            $('.menu').each((i, menu)=>{
+                if (menu.id == 'test'){
+                    if (options['display-test']){
+                        $('#nav_group').append('<a href="?menu=test">test</a>')
+                        $('#json_dump').after($('<textarea editable=false style="width:400px;height:200px">').val(JSON.stringify(storage, null, 4)))
+                    }
+                } else {
+                    $('#nav_group').append(`<a href="?menu=${menu.id}">${menu.id}</a>`)
+                }
+            })
 
-function selectTheme(theme) {
-  const name = theme.children('h2').html();
-  themes.find(theme => {
-    if (theme.name == name) {
-      modifyUIWithTheme(theme);
-      chrome.storage.sync.set({
-        'options': {
-          theme: theme.name
-        }
-      }, () => {
-        if (chrome.runtime.lastError) {
-          console.error('Saving theme failed: ' + chrome.runtime.lastError.message);
-        }
-      });
-      return
-    }
-  });
-}
+            // tried to do it with just plain css 3 and ::after but it didn't work out
+            if (options['nav-sep'] == 'arrow'){
+                $('nav div :not(:last-child)').after('<img src="images/ui/nav-arrow.svg"></img>')
+                $('nav div').after('<img src="images/ui/nav-arrow.svg"></img>')
+            } else if (options['nav-sep'] == 'line') {
+                $('nav div :not(:last-child)').after('<img src="images/ui/nav-line.svg"></img>')
+                $('nav div').after('<img src="images/ui/nav-line.svg"></img>')
+            }
+
+            selected = query_string['menu']
+            document.getElementById(selected || 'overview').style.display = 'inherit'
+            $(`nav a:contains(${selected})`).addClass('selected')
+            document.getElementById('import').onclick = imex.import
+            document.getElementById('export').onclick = imex.export
+            document.body.style.display = 'initial'
+
+            Object.entries(storage['groups']).forEach(([name, tabs]) => {
+                $('#group_names').append(`<a href="?menu=groups&tab=${name}">${unescape(name)}</a>`)
+                if (query_string['tab'] == unescape(name)){
+                    Object.entries(tabs).forEach(([link, title]) => {
+                        b = $(`<p>${title}</p>`)
+                        b.attr('data-link', link);
+                        b.dblclick((e) => {window.open(e.target.dataset.link, "_blank")})
+                        $('#group_tabs').append($("<div tabindex='-1'><img src='images/ui/trash.svg'></img></div>").prepend(b))
+                    })
+                }
+            })
+
+            $('#group_tabs > div > img').click((e)=>{
+                groups = storage['groups']
+                delete groups[query_string['tab']][e.target.previousSibling.dataset.link]
+                chrome.storage.sync.set(
+                    {'groups': groups},
+                    () => {
+                        if (chrome.runtime.lastError) {
+                            console.error('Update failed: ' + chrome.runtime.lastError.message)
+                            displayErrorWithMessage('Your groups couldn\'t be updated.')
+                        } else {
+                            e.target.parentNode.remove()
+                        }
+                    }
+                )
+            })
+        })
+    })
+})

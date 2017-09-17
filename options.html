@@ -1,122 +1,49 @@
-<!DOCTYPE html>
+<!doctype html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <style>
-      @font-face {
-        font-family: 'Visby DemiBold';
-        src: url('fonts/VisbyCF-DemiBold.woff2') format('woff2');
-      }
-      @font-face {
-        font-family: 'Visby Medium';
-        src: url('fonts/VisbyCF-Medium.woff2') format('woff2');
-      }
-      @font-face {
-        font-family: 'Visby Light';
-        src: url('fonts/VisbyCF-Light.woff2') format('woff2');
-      }
-      body {
-        color: black;
-        margin: 16px;
-      }
-      #logo {
-        margin: 0 auto;
-        display: block;
-        width: 30px;
-        margin-bottom: 20px;
-      }
-      .container-div {
-        margin-bottom: 20px;
-        background: white;
-        width: 100%;
-        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-        padding: 16px;
-        box-sizing: border-box;
-      }
-      #theme-list {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: space-between;
-      }
-      .theme {
-        cursor: pointer;
-        height: 130px;
-        width: 90px;
-      }
-      .theme:hover h2 {
-        font-family: 'Visby DemiBold';
-        letter-spacing: 0.5px;
-      }
-      .theme div {
-        border-radius: 50%;
-        height: 90px;
-        width: 90px;
-        margin-bottom: 4px;
-      }
-      .theme h2 {
-        color: black;
-        font-family: 'Visby Light';
-        letter-spacing: 1px;
-        margin: 0;
-        width: 100%;
-        text-align: center;
-      }
-      h1 {
-        font-family: 'Visby DemiBold';
-        margin: 0;
-        letter-spacing: 0.5px;
-        margin-bottom: 8px;
-      }
-      p {
-        font-family: 'Visby Medium';
-        font-size: 14px;
-        line-height: 1.2em;
-        margin: 0;
-        letter-spacing: 0.5px;
-      }
-      span {
-        color: #C7C7CD;
-      }
-      footer {
-        display: flex;
-        justify-content: space-between;
-      }
-      footer a {
-        color: white;
-        text-decoration: none;
-        display: flex;
-        font-family: 'Visby Medium';
-        font-size: 18px;
-        align-items: center;
-        letter-spacing: 0.5px;
-      }
-      footer a:hover {
-        text-decoration: underline;
-      }
-      footer a img {
-        margin-right: 8px;
-        width: 16px;
-      }
-    </style>
-  </head>
-  <body>
-    <img id="logo" src="images/ui/logo.png" alt="The Open Tabs Logo.">
-    <div id="themes" class="container-div">
-      <h1>Make it yours. <span>Pick a theme.</span></h1>
-      <div id="theme-list"></div>
-    </div>
-    <div id="note" class="container-div">
-      <h1>Help build Open Tabs.</h1>
-      <p>Open Tabs is still in development, if there are features you'd like to request or remove, please let me know on Twitter, link found below.</p>
-    </div>
-    <footer>
-      <a href="http://www.opentabs.io/">OpenTabs.io</a>
-      <a href="https://twitter.com/DanValderrama0">
-        <img src="images/ui/twitter.png">
-        Built by Dan.
-      </a>
-    </footer>
-    <script src="js/jquery-3.1.1.min.js"></script>
-    <script src="js/options.js"></script>
-  </body>
+    <head>
+        <title>Open Tabs</title>
+        <link rel="stylesheet" type="text/css" href="css/common.css">
+        <link rel="stylesheet" type="text/css" href="css/options.css">
+        <script src="lib/jquery/jquery-3.1.1.min.js"></script>
+        <script src="lib/chrome_extension_option_settings/ceos.js"></script>
+        <script src='lib/chrome_extension_storage_import_export/import_export.js'></script>
+        <script src="js/options.js"></script>
+    </head>
+    <body>
+        <nav>
+            <div id='nav_group'>
+            </div>
+        </nav>
+        <div class='menu' id='overview'>
+            <div class='menu_item' data-name="Nav Separator">
+                <div class='menu_content'>
+                    <input class="ceos_options" type="radio" name="nav-sep" value="line" checked>Line<br>
+                    <input class="ceos_options" type="radio" name="nav-sep" value="arrow">Arrow<br>
+                </div>
+            </div>
+            <div class='menu_item' data-name="Storage">
+                <div class='menu_content'>
+                    <button id='import'>Import</button>
+                    <button id='export'>Export</button>
+                    <button id="clear_storage">Clear Storage</button>
+                </div>
+            </div>
+            <div class='menu_item' data-name="dev">
+                <div class='menu_content'>
+                    <input class="ceos_options" type="checkbox" name="display-test" value="display-test">Show Test Menu<br>
+                </div>
+            </div>
+        </div>
+        <div class='menu' id='groups'>
+            <div style='display:flex'>
+                <div id='group_names'></div>
+                <div id='group_tabs'></div>
+            </div>
+        </div>
+        <div class='menu' id='test'>
+            <p id='json_dump'>Export sample:</p>
+        </div>
+        <div id="snackbar">Reload page to see changes</div>
+    </body>
 </html>
+

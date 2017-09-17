@@ -1,0 +1,82 @@
+body {
+    color: black;
+    width: 450px;
+}
+#logo {
+    display: block;
+    margin: 8px auto;
+    width: 30px;
+    padding: 10px;
+}
+#content{
+    margin: 0px 15px 5px;
+}
+.container-div {
+    margin-bottom: 15px;
+    background: white;
+    width: 100%;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    padding: 16px;
+    box-sizing: border-box;
+}
+#theme-list {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+.theme {
+    cursor: pointer;
+    height: 130px;
+    width: 90px;
+}
+.theme:hover h2 {
+    letter-spacing: 0.5px;
+}
+.theme div {
+    border-radius: 50%;
+    height: 90px;
+    width: 90px;
+    margin-bottom: 4px;
+}
+.theme h2 {
+    color: black;
+    letter-spacing: 1px;
+    margin: 0;
+    width: 100%;
+    text-align: center;
+}
+h1 {
+    margin: 0;
+    letter-spacing: 0.5px;
+    margin-bottom: 8px;
+}
+p {
+    font-size: 14px;
+    line-height: 1.2em;
+    margin: 0;
+    letter-spacing: 0.5px;
+}
+span {
+    color: #C7C7CD;
+}
+footer {
+    display: flex;
+    justify-content: space-between;
+}
+footer a {
+    text-decoration: none;
+    display: flex;
+    font-size: 18px;
+    align-items: center;
+    letter-spacing: 0.5px;
+    padding: 5px;
+    color: blue;
+}
+footer a:hover {
+    text-decoration: underline;
+}
+footer a img {
+    margin-right: 8px;
+    width: 16px;
+    padding: 2px;
+}
